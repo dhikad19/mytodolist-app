@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% load static %}
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="description"
+      content="This is to do list implemented using Django by Dennis Ivy who is a full stack web developer."
+    />
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>ToDo List</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      html {
+        height: 100%;
+      }
+
+      .content {
+        background-color: rgba(0, 0, 0, 0.212);
+        border-radius: 0.25em;
+        box-shadow: 0 0 0.25em rgba(0, 0, 0, 0.25);
+        box-sizing: border-box;
+        width: 500px;
+        height: auto;
+        left: 50%;
+        padding: 10vmin;
+        position: fixed;
+        text-align: center;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      h1 {
+        font-family: monospace;
+        text-transform: uppercase;
+        background: linear-gradient(to right, #ffe8f1e8 0%, #74cdeed7 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      h3 {
+        font-family: monospace;
+        text-transform: uppercase;
+        background: linear-gradient(to right, #ffe8f1e8 0%, #74cdeed7 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      @keyframes slide {
+        0% {
+          transform: translateX(-25%);
+        }
+        100% {
+          transform: translateX(25%);
+        }
+      }
+      body {
+        background: linear-gradient(-45deg, #126ba7, #071086, #096e92, #23d5ab);
+        background-size: 400% 400%;
+        animation: gradient 15s ease infinite;
+        height: 100vh;
+        font-family: "Nunito", sans-serif;
+        padding-top: 25px;
+      }
+      @keyframes gradient {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-family: "Raleway", sans-serif;
+      }
+
+      a,
+      p {
+        color: #000000;
+      }
+
+      a {
+        font-weight: 600;
+      }
+
+      .container {
+        max-width: 550px;
+        margin: auto;
+        border-radius: 0.25em;
+        background-color: rgba(255, 255, 255, 0.199);
+        -webkit-box-shadow: 2px 2px 13px -4px rgba(0, 0, 0, 0.21);
+        box-shadow: 2px 2px 13px -4px rgba(0, 0, 0, 0.21);
+      }
+
+      input {
+        outline: none;
+        border: none;
+      }
+
+      .header-bar {
+        display: grid;
+        justify-content: center;
+        text-align: center;
+        color: rgb(250, 250, 250);
+        padding: 25px;
+        border-radius: 5px 5px 5px 5px;
+        background: rgba(48, 48, 48, 0.205);
+      }
+
+      .header-bar a {
+        color: rgb(247, 247, 247);
+        text-decoration: none;
+      }
+
+      .task-wrapper {
+        max-width: 763px;
+        margin: auto;
+        border-radius: 5px 5px 5px 5px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: rgba(255, 255, 255, 0.411);
+        border-top: 1px solid #c9ced379;
+        overflow: hidden;
+      }
+
+      .task-title {
+        display: flex;
+        padding: 20px;
+      }
+
+      .task-title a {
+        text-decoration: none;
+        color: #011729;
+        margin-left: 10px;
+      }
+
+      .task-complete-icon {
+        height: 20px;
+        width: 20px;
+        background-color: rgba(10, 49, 2, 0.808);
+        border-radius: 50%;
+      }
+
+      .user {
+        background: linear-gradient(to right, #000000 0%, #00151d 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .user1 {
+        text-justify: distribute-all-lines;
+        color: rgba(0, 0, 0, 0.808);
+      }
+      .task-incomplete-icon {
+        height: 20px;
+        width: 20px;
+        background-color: rgb(218, 218, 218);
+        border-radius: 50%;
+      }
+
+      .delete-link {
+        text-decoration: none;
+        font-weight: 900;
+        color: rgb(51, 51, 51);
+        font-size: 22px;
+        line-height: 0;
+        padding: 20px 0px;
+      }
+
+      /*Handle Classes*/
+
+      .handle {
+        display: inline-block;
+        padding: 20px 16px;
+        cursor: grab;
+        user-select: none;
+      }
+
+      .handle:after,
+      .handle:before {
+        display: block;
+        content: "";
+      }
+
+      .handle:active,
+      .handle:active:before,
+      .handle:active:after {
+        cursor: grabbing;
+      }
+
+      .dropArea {
+        background-color: #f1f2f6;
+        color: black;
+        border: #ced6e0 1px solid;
+      }
+
+      .selectedTask {
+        opacity: 0.6;
+      }
+
+      #add-link {
+        color: rgb(49, 49, 49) f;
+        text-decoration: none;
+        font-size: 42px;
+        text-shadow: 1px 1px #464646;
+      }
+
+      #search-add-wrapper {
+        display: flex;
+        margin: 10px;
+        justify-content: space-around;
+        align-items: center;
+        padding: 20px;
+      }
+
+      @media screen and (max-width: 320px) {
+        #search-add-wrapper {
+          padding: 10px;
+        }
+      }
+
+      input[type="text"],
+      input[type="password"],
+      textarea {
+        border: 1px solid #757575;
+        border-radius: 5px;
+        padding: 10px;
+        width: 90%;
+      }
+
+      label {
+        padding-top: 10px !important;
+        display: block;
+      }
+
+      ::placeholder {
+        font-weight: 300;
+        opacity: 0.5;
+        color: #000000;
+      }
+
+      .button {
+        border: 1px solid #757575;
+        background-color: rgba(0, 0, 0, 0.384);
+        color: rgb(0, 0, 0);
+        padding: 10px;
+        font-size: 14px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+      }
+
+      .card-body {
+        padding: 20px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">{% block content %} {% endblock content %}</div>
+  </body>
+</html>
